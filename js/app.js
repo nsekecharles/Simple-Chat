@@ -3,10 +3,11 @@
 */
 
 define(['angular',
+    	'socketio',
 		'ngResource',
 		'ngRoute',
     	'velocity'], 
-	function (angular) {
+	function (angular, io) {
 	'use strict';
 
 	var simpleChat = angular.module('simpleChat',[
@@ -23,8 +24,7 @@ define(['angular',
 	});
 
 	simpleChat.controller('mainCtrl', ['$scope', '$location', function($scope, $location) {
-			// Main controller
-			console.log(Velocity)
+			
 				
 	}]);
 
