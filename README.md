@@ -1,6 +1,6 @@
 # Simple-Chat
 
-This is a simple chat application. I have launched this project to give some examples on who I use my favorites front-end tools.
+This is a simple chat application. I have launched this project to give some examples on how I use my favorites front-end tools.
 
 Feel free to add a new feature or correct if I do something in an unconventional way I'm not an expert.
 
