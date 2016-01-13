@@ -13,3 +13,8 @@ What is used in this project:
 - Grunt ---> 
 - Bower --->
 - ... ---> why ?
+- 
+
+To start the node server just run the command 'node server' at the root of the project the server will be listening at the port 4490...
+
+To start to client side server just run the command 'grunt' at the root of the project. The web server will be listening on the port 4000. You can test now on your web browser via the address localhost:4000/home
