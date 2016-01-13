@@ -1,0 +1,33 @@
+<div ng-hide="connected">
+	
+	<form class="form-inline">
+	  <div class="form-group">
+	    <label class="sr-only" for="userName">Email address</label>
+	    <input type="text"  ng-model="user.userName" ng-value="user.userName" class="form-control" ng-change="onChangeUserName(user.userName)" id="userName" placeholder="You are...">
+	  </div>
+	  <button ng-click="connect(user.userName)" type="button" class="btn btn-success" ng-disabled="user.userName === '' || nameUsed">Connect</button>
+  	</form>
+	<div class="col-md-3" ng-show="nameUsed">This name is not available.</div>
+	
+</div>
+
+<div ng-show="connected">
+	
+	<div class="row msg_grid">
+		<div class="col-md-10">
+			
+		</div>	
+	</div>
+	
+	<div class="row">
+		<div class="col-md-10">
+			<input type="text" ng-model="msg" placeholder="type your message..."  class="form-control" />
+		</div>
+		<div class="col-md-2">
+			<button class="btn btn-success" ng-disabled="'msg == ''" ng-click="sendMsg()">Send</button>
+		</div>
+	</div>
+	
+
+	
+</div>

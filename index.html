@@ -5,12 +5,22 @@
 	<title>Simple Chat</title>
 	<script data-main="js/index" src="js/libs/requirejs-2.1.9.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<style type="text/css">
+		.msg_grid {
+			height: 500px;
+			border-radius: 25px;
+    		border: 1px solid black;
+		}
 
+		.row{
+			margin-top: 10px;
+		}
+	</style>
 </head>
 <body>
 	<div id="main" class="container" ng-controller="mainCtrl">
 		<h2>
-			A Title here... Or not ?
+			Simple Chat App!
 		</h2>
 		
 		<div ng-view></div>

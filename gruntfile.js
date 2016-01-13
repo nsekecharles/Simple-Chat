@@ -1,3 +1,5 @@
+var modRewrite = require('connect-modrewrite');
+
 module.exports = function(grunt) {
 
   // Project configuration.
@@ -30,7 +32,7 @@ module.exports = function(grunt) {
         },
         html: {
           cwd: './',
-          src: [ 'index.html' ],
+          src: [ '*.html' ],
           dest: 'build',
           expand: true
         },
@@ -104,8 +106,22 @@ module.exports = function(grunt) {
           options: {
             port: 4000,
             base: 'build',
-            hostname: '*'
-          }
+            hostname: '*',
+            /* Support `$locationProvider.html5Mode(true);`
+            * Requires grunt 0.9.0 or higher
+            * Otherwise you will see this error:
+            *   Running "connect:livereload" (connect) task
+            *   Warning: Cannot call method 'push' of undefined Use --force to continue.
+            */
+            middleware: function(connect, options, middlewares) {
+                var modRewrite = require('connect-modrewrite');
+
+                // enable Angular's HTML5 mode
+                middlewares.unshift(modRewrite(['!\\.html|\\.js|\\.svg|\\.css|\\.png$ /index.html [L]']));
+
+                return middlewares;
+              }
+            }
         }
       }
   });
