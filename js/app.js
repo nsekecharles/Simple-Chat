@@ -30,10 +30,10 @@ define(['angular',
 		$scope.user = {};
 		$scope.user.userName = '';
 		$scope.nameUsed = false;
-		$scope.msg = '';
+		$scope.message = {};
 		$scope.messages = [];
 
-		var socket = io.connect('http://localhost:4490/');
+		$scope.socket = io.connect('http://192.168.0.15:4490/');
 		
 		$scope.clear = function() {
 			 $scope.$apply(function() {
@@ -42,15 +42,14 @@ define(['angular',
 			 });
 		};
 
-		socket.on("registerOK", function(data) {
-			console.log($scope)
+		$scope.socket.on("registerOK", function(data) {
 			
 			$scope.connected = true;
-
+			$scope.user.name = $scope.user.userName;
 			$scope.clear();
 		});
 		
-		socket.on("nameUsed", function(data) {
+		$scope.socket.on("nameUsed", function(data) {
 			if(data) {
 				$scope.nameUsed = true;
 			} else {
@@ -59,25 +58,33 @@ define(['angular',
 			$scope.$apply();
 		});
 
-		
+		$scope.socket.on("newMsg", function(data) {
+			
+			console.log(data);
+			
+			$scope.messages.push(data);
+			
+			$scope.message.msg = '';
+			
+			$scope.$apply();
+		});
+
+
 		$scope.connect = function(userName) {
 			
-			socket.emit('register', userName);
+			$scope.socket.emit('register', userName);
 
 		}
 		
 		$scope.onChangeUserName = function(text) {
 		
-			socket.emit('checkName', text);
+			$scope.socket.emit('checkName', text);
 		}
 
-		$scope.sendMsg = function() {
+		$scope.sendMsg = function(msg) {
 			
-			console.log($scope.msg);
+			$scope.socket.emit('sendMsg', {to:'all', message:msg});
 
-			socket.emit('sendMsg', {to:'all', msg:$scope.msg});
-
-			$scope.messages.push({from:'me', msg:$scope.msg});
 		}
 				
 	}]);

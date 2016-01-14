@@ -13,36 +13,65 @@ app.get('/', function(req, res){
 });
 
 io.on('connection', function(socket){
-  console.log('a user connected' + socket);
+
+  console.log('a user connected: ' + socket.id);
+
 });
 
 io.on('message', function(data){
+  
   console.log('Msg sent' + data);
+
 });
 
 io.on('register', function(data) {
+
 	userList.push(data);
-  console.log('registering : ' + data);
+
+	console.log('registering : ' + data);
+
 });
 
 io.sockets.on('connection', function (socket) {
+  
   socket.on('register', function(data) {
 		
-		if(!_.contains(userList, data)) {
+		if(!_.find(userList,function(user){ return user.name === data; })) {
 
 			console.log('registering : ' + data);
 		
-			userList.push(data);
+			userList.push({socketId : socket.id, name : data});
 		  	
 			socket.emit('registerOK', true);
 		}
 	
 	}).on('checkName', function(data) {
+		
 		console.log("list of names... " + userList);
+	 	
 	 	console.log("checkName... " + data);
-	 	var nameUsed = _.contains(userList, data);
+
+	 	var nameUsed = _.find(userList,function(user){ return user.name === data; }) !== undefined;
+
 	 	socket.emit('nameUsed', nameUsed);
 	 	
+	}).on('sendMsg', function(data) {
+		
+		if(data.to == 'all') {
+			
+			console.log(data);
+
+			io.emit('newMsg', {
+				
+				from:
+					_.find(userList,function(user){ 
+					
+					return user.socketId === socket.id; 
+				
+					}).name, 
+				message: data.message});
+		
+		}
 	});
 });
 

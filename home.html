@@ -15,16 +15,18 @@
 	
 	<div class="row msg_grid">
 		<div class="col-md-10">
-			
+			<div class="row" ng-repeat="message in messages">
+				<span ng-if='message.from == user.name'> me </span> <span ng-if='message.from != user.name'> {{message.from}} </span> : {{message.message}}
+			</div>
 		</div>	
 	</div>
 	
 	<div class="row">
 		<div class="col-md-10">
-			<input type="text" ng-model="msg" placeholder="type your message..."  class="form-control" />
+			<input type="text" ng-model="message.msg" ng-value="message.msg" placeholder="type your message..."  class="form-control" />
 		</div>
 		<div class="col-md-2">
-			<button class="btn btn-success" ng-disabled="'msg == ''" ng-click="sendMsg()">Send</button>
+			<button class="btn btn-success" ng-disabled="message.msg == ''" ng-click="sendMsg(message.msg)">Send</button>
 		</div>
 	</div>
 	
